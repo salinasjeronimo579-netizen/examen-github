@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOOKER | Biblioteca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="final.css">
+  <script src="final.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="logo" id="logoText">BOOKER</div>
+      <div class="logo-underline"></div>
+      <nav class="menu" id="sidebarMenu">
+        <a class="menu-item active" data-page="inicio">📚 Catálogo</a>
+        <a class="menu-item" data-page="destacados">⭐ Destacados</a>
+        <a class="menu-item" data-page="novedades">🆕 Novedades</a>
+        <a class="menu-item" data-page="favoritos">❤️ Favoritos</a>
+        <a class="menu-item" data-page="contacto">✉️ Contacto</a>
+        <div class="menu-divider"></div>
+        <a class="menu-item" data-page="admin">🔐 Admin <span class="admin-badge">ADM</span></a>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-divider"></div>
+      <p class="copyright">&copy; 2026 Booker</p>
+      <p class="copyright-sub">Todos los derechos reservados</p>
+    </div>
+  </aside>
+
+  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+  <main class="main" id="mainContent">
+    <header class="navbar" id="navbar">
+      <div class="navbar-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+        <h1 class="navbar-title" id="navbarTitle">BOOKER</h1>
+        <span class="navbar-subtitle" id="navbarSubtitle">Biblioteca</span>
+      </div>
+      <div class="navbar-right">
+        <div class="search-wrapper">
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar libros..." autocomplete="off">
+          <span class="search-icon">🔍</span>
+        </div>
+        <div class="navbar-actions">
+          <!-- Botón cuenta: clic largo (1.5s) activa modo admin -->
+          <button class="icon-btn" id="accountBtn" title="Mi cuenta">👤</button>
+          <button class="icon-btn cart-btn" id="cartDrawerBtn" style="position:relative">
+            🛒<span class="cart-badge" id="cartBadge">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CARRUSEL HERO (se oculta al navegar a secciones no-inicio) -->
+    <section class="hero-carousel" id="heroCarousel">
+      <div class="carousel-track">
+        <div class="carousel-slide active">
+          <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000&auto=format&fit=crop')"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <span class="slide-badge">NOVEDAD</span>
+            <h2 class="slide-title">Explora Nuevos Mundos</h2>
+            <p class="slide-description">Descubre historias increíbles y los mejores libros seleccionados para ti.</p>
+            <a href="#" class="slide-btn" data-nav="destacados">Descubrir Colección</a>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2000&auto=format&fit=crop')"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <span class="slide-badge">DESTACADO</span>
+            <h2 class="slide-title">Clásicos Inmortales</h2>
+            <p class="slide-description">Obras maestras que han trascendido generaciones.</p>
+            <a href="#" class="slide-btn" data-nav="novedades">Ver Clásicos</a>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2000&auto=format&fit=crop')"></div>
+          <div class="slide-overlay"></div>
+          <div class="slide-content">
+            <span class="slide-badge">EXCLUSIVO</span>
+            <h2 class="slide-title">Ediciones Especiales</h2>
+            <p class="slide-description">Colecciones únicas con encuadernaciones artesanales.</p>
+            <a href="#" class="slide-btn" data-nav="inicio">Explorar Ediciones</a>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-btn carousel-btn-prev" id="carouselPrev">❮</button>
+      <button class="carousel-btn carousel-btn-next" id="carouselNext">❯</button>
+      <div class="carousel-indicators" id="carouselIndicators">
+        <span class="indicator active" data-slide="0"></span>
+        <span class="indicator" data-slide="1"></span>
+        <span class="indicator" data-slide="2"></span>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DINÁMICA DE CONTENIDO -->
+    <section class="books-section" id="booksSection">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title" id="sectionTitle">Libros Destacados</h2>
+          <p class="section-subtitle" id="sectionSubtitle">Selecciones curadas por nuestro equipo</p>
+        </div>
+        <a class="section-link" id="viewAllLink">Ver todo →</a>
+      </div>
+      <div class="books-grid" id="booksContainer"></div>
+    </section>
+
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-col"><h4>BOOKER</h4><p>Biblioteca clásica desde 1985. Una amplia selección de títulos para lectores exigentes.</p></div>
+        <div class="footer-col"><h4>Enlaces</h4><a data-nav="inicio" href="#">Catálogo</a><a data-nav="destacados" href="#">Destacados</a><a data-nav="novedades" href="#">Novedades</a></div>
+        <div class="footer-col"><h4>Contacto</h4><a href="#">contacto@broker.com</a><a href="#">+57 300 000 0000</a><a href="#">Medellín, Colombia</a></div>
+      </div>
+      <div class="footer-bottom"><p id="footerYear">&copy; 2026 Booker Biblioteca.</p></div>
+    </footer>
+  </main>
+
+  <!-- ===== MODAL LIBRO (usuario) / ADMIN ===== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-container" id="modalContainer">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ===== MODALES PANEL CONTROL ===== -->
+  <!-- Add/Delete -->
+  <div class="modal-overlay" id="modal-add-delete">
+    <div class="modal-container admin-modal">
+      <button class="modal-close">&times;</button>
+      <h2 class="section-title" style="margin-bottom:1.5rem">Agregar o Eliminar Libros</h2>
+      <div class="admin-modal-layout">
+        <div class="contact-form">
+          <h3 style="margin-bottom:1rem">Agregar Nuevo Libro</h3>
+          <input type="text" id="newBookTitle" placeholder="Título del Libro" />
+          <input type="text" id="newBookAuthor" placeholder="Autor" />
+          <input type="text" id="newBookCategory" placeholder="Categoría" />
+          <input type="url" id="newBookImage" placeholder="URL de Imagen de Portada" />
+          <textarea id="newBookDesc" placeholder="Sinopsis del libro..." rows="3"></textarea>
+          <button class="card-btn" style="width:100%" id="saveNewBook">Guardar Libro</button>
+        </div>
+        <hr style="margin:2rem 0;border:0;height:1px;background:#ece5d8">
+        <h3 style="margin-bottom:1rem">Eliminar Libros Existentes</h3>
+        <div id="deleteBookList" style="max-height:250px;overflow-y:auto"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Books -->
+  <div class="modal-overlay" id="modal-edit-books">
+    <div class="modal-container admin-modal">
+      <button class="modal-close">&times;</button>
+      <h2 class="section-title" style="margin-bottom:1.5rem">Editar Información de Libros</h2>
+      <p style="margin-bottom:1rem;font-style:italic">Selecciona un libro para modificar sus datos:</p>
+      <div id="editBookList"></div>
+      <div id="editBookForm" style="display:none;margin-top:1.5rem;border-top:2px dashed #c9a96e;padding-top:1.5rem">
+        <h3 style="margin-bottom:1rem">Editando: <span id="editingBookName" style="color:#c9a96e"></span></h3>
+        <input type="hidden" id="editBookId">
+        <input type="text" id="editBookTitle" placeholder="Título" style="width:100%;padding:0.8rem;margin-bottom:0.8rem;border:2px solid #e0d7c6;border-radius:16px;font-family:inherit">
+        <input type="text" id="editBookAuthor" placeholder="Autor" style="width:100%;padding:0.8rem;margin-bottom:0.8rem;border:2px solid #e0d7c6;border-radius:16px;font-family:inherit">
+        <input type="text" id="editBookCategory" placeholder="Categoría" style="width:100%;padding:0.8rem;margin-bottom:0.8rem;border:2px solid #e0d7c6;border-radius:16px;font-family:inherit">
+        <button class="card-btn" id="saveEditBook">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loan Requests -->
+  <div class="modal-overlay" id="modal-loan-requests">
+    <div class="modal-container admin-modal">
+      <button class="modal-close">&times;</button>
+      <h2 class="section-title" style="margin-bottom:1.5rem">Solicitudes de Préstamos Pendientes</h2>
+      <div id="loanRequestsList"></div>
+    </div>
+  </div>
+
+  <!-- Users List -->
+  <div class="modal-overlay" id="modal-users-list">
+    <div class="modal-container admin-modal" style="max-width:750px">
+      <button class="modal-close">&times;</button>
+      <h2 class="section-title" style="margin-bottom:1.5rem">Usuarios Registrados</h2>
+      <table class="admin-table">
+        <thead><tr><th>Usuario</th><th>Registrado Desde</th><th>Acción</th></tr></thead>
+        <tbody id="usersTableBody"></tbody>
+      </table>
+      <div id="user-history-section" style="margin-top:2rem;display:none;border-top:2px dashed #c9a96e;padding-top:1rem">
+        <h3>Historial: <span id="history-username" style="color:#c9a96e"></span></h3>
+        <div id="userHistoryContent" style="margin-top:1rem"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CARRITO LATERAL ===== -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>🛒 Carrito</h3>
+      <span class="cart-close" id="cartClose">✕</span>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+      <div class="empty-state">Tu carrito está vacío</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total"><span>Total:</span><span id="cartTotal">$0.00</span></div>
+      <button class="cart-checkout" id="cartCheckout">Finalizar compra</button>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast-msg" id="toastMsg"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BROKER | Catálogo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href=".././principal/styles.css">
+    <style>
+        /* ===== CATÁLOGO ===== */
+        .catalogo-section {
+            padding: 3rem 0;
+        }
+
+        .catalogo-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .catalogo-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .catalogo-titulo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #c9a96e;
+        }
+
+        .catalogo-subtitulo {
+            color: #888;
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        .catalogo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 1.8rem;
+        }
+
+        /* TARJETA */
+        .catalogo-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .catalogo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.14);
+        }
+
+        .catalogo-card-img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            display: block;
+        }
+
+        .catalogo-card-info {
+            padding: 0.9rem 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .catalogo-card-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #0d1b2a;
+            line-height: 1.3;
+        }
+
+        .catalogo-card-autor {
+            font-size: 0.78rem;
+            color: #777;
+            font-style: italic;
+        }
+
+        .catalogo-card-categoria {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #8b6914;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            background: #f5ead0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            align-self: flex-start;
+            margin-top: auto;
+            padding-top: 0.5rem;
+        }
+
+        /* MODAL */
+        .catalogo-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .catalogo-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .catalogo-modal-container {
+            background: #fff;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 720px;
+            max-height: 88vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.3s ease;
+        }
+
+        .catalogo-modal-overlay.active .catalogo-modal-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .catalogo-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.4rem;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            line-height: 1;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .catalogo-modal-close:hover {
+            color: #0d1b2a;
+        }
+
+        .catalogo-modal-body {
+            display: flex;
+            gap: 2rem;
+            padding: 2.2rem;
+        }
+
+        .catalogo-modal-img {
+            width: 210px;
+            min-width: 210px;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+        }
+
+        .catalogo-modal-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .catalogo-modal-categoria {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #8b6914;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: #f5ead0;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            align-self: flex-start;
+        }
+
+        .catalogo-modal-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #0d1b2a;
+            line-height: 1.3;
+        }
+
+        .catalogo-modal-autor {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .catalogo-modal-autor span {
+            font-weight: 600;
+            color: #0d1b2a;
+            font-style: normal;
+        }
+
+        .catalogo-modal-divider {
+            height: 1px;
+            background: #ece5d8;
+            margin: 0.4rem 0;
+        }
+
+        .catalogo-modal-sinopsis-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #c9a96e;
+        }
+
+        .catalogo-modal-sinopsis {
+            font-size: 0.92rem;
+            color: #444;
+            line-height: 1.75;
+        }
+
+        .catalogo-modal-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.4rem;
+        }
+
+        .catalogo-modal-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .catalogo-modal-meta-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #aaa;
+        }
+
+        .catalogo-modal-meta-value {
+            font-size: 0.9rem;
+            color: #0d1b2a;
+            font-weight: 600;
+        }
+
+        .catalogo-modal-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.8rem;
+            background: #0d1b2a;
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            transition: background 0.25s;
+            align-self: flex-start;
+        }
+
+        .catalogo-modal-btn:hover {
+            background: #c9a96e;
+            color: #0d1b2a;
+        }
+
+        @media (max-width: 600px) {
+            .catalogo-modal-body {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .catalogo-modal-img {
+                width: 160px;
+                min-width: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo" id="logoText">BROKER</div>
+            <div class="logo-underline"></div>
+            <nav class="menu">
+                <a href="catalogo.html" class="menu-item active" data-page="catalogo"> Catálogo</a>
+                <a href="#" class="menu-item" data-page="destacados"> Destacados</a>
+                <a href="#" class="menu-item" data-page="novedades"> Novedades</a>
+                <a href="#" class="menu-item" data-page="favoritos"> Favoritos</a>
+                <a href="#" class="menu-item" data-page="contacto"> Contacto</a>
+            </nav>
+        </div>
+        <div class="sidebar-bottom">
+            <div class="sidebar-divider"></div>
+            <p class="copyright">&copy; 2026 Broker</p>
+            <p class="copyright-sub">Todos los derechos reservados</p>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main" id="mainContent">
+
+        <!-- NAVBAR -->
+        <header class="navbar" id="navbar">
+            <div class="navbar-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+                <h1 class="navbar-title">BROKER</h1>
+                <span class="navbar-subtitle">Librería Clásica</span>
+            </div>
+            <div class="navbar-right">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar libros..."
+                        autocomplete="off">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="navbar-actions">
+                    <button class="icon-btn" title="Mi cuenta">👤</button>
+                    <button class="icon-btn cart-btn" style="position:relative;" id="prestamosBtn">📚<span
+                            class="cart-badge">0</span></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- CATÁLOGO -->
+        <section class="catalogo-section">
+            <div class="catalogo-header">
+                <h2 class="catalogo-titulo">Catálogo</h2>
+                <p class="catalogo-subtitulo">Todos nuestros títulos disponibles</p>
+            </div>
+            <div class="catalogo-grid" id="catalogoGrid"></div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>BROKER</h4>
+                    <p>Librería clásica desde 1985. Seleccionamos los mejores títulos para lectores exigentes.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces</h4>
+                    <a href="#">Catálogo</a>
+                    <a href="#">Destacados</a>
+                    <a href="#">Novedades</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <a href="#">contacto@broker.com</a>
+                    <a href="#">Madrid, España</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Broker Librería Clásica. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- MODAL -->
+    <div class="catalogo-modal-overlay" id="catalogoModalOverlay">
+        <div class="catalogo-modal-container">
+            <button class="catalogo-modal-close" id="catalogoModalClose">&times;</button>
+            <div class="catalogo-modal-body" id="catalogoModalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const libros = [
+            {
+                titulo: "Cien años de soledad",
+                autor: "Gabriel García Márquez",
+                categoria: "Realismo Mágico",
+                año: 1967,
+                paginas: 471,
+                editorial: "Sudamericana",
+                sinopsis: "La historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo. Una obra cumbre del realismo mágico latinoamericano que explora la soledad, el amor y la inevitable repetición de la historia.",
+                portada: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "Don Quijote de la Mancha",
+                autor: "Miguel de Cervantes",
+                categoria: "Clásico",
+                año: 1605,
+                paginas: 863,
+                editorial: "Francisco de Robles",
+                sinopsis: "Las aventuras del hidalgo Alonso Quijano, quien enloquece leyendo novelas de caballería y decide convertirse en caballero andante bajo el nombre de Don Quijote. Considerada la primera novela moderna.",
+                portada: "https://images.unsplash.com/photo-1495640388908-05fa85288e61?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "El Principito",
+                autor: "Antoine de Saint-Exupéry",
+                categoria: "Fábula",
+                año: 1943,
+                paginas: 96,
+                editorial: "Reynal & Hitchcock",
+                sinopsis: "Un piloto que aterriza en el desierto del Sahara conoce a un pequeño príncipe venido de otro planeta. A través de sus conversaciones, exploran temas como el amor, la amistad, la soledad y el sentido de la vida.",
+                portada: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "1984",
+                autor: "George Orwell",
+                categoria: "Distopía",
+                año: 1949,
+                paginas: 328,
+                editorial: "Secker & Warburg",
+                sinopsis: "En un estado totalitario del futuro, Winston Smith trabaja para el Partido reescribiendo la historia. Su rebelión silenciosa lo lleva a cuestionar todo lo que le han enseñado sobre la realidad y el poder.",
+                portada: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "Crimen y Castigo",
+                autor: "Fiódor Dostoyevski",
+                categoria: "Novela Psicológica",
+                año: 1866,
+                paginas: 551,
+                editorial: "El Mensajero Ruso",
+                sinopsis: "El estudiante Raskolnikov comete un asesinato convencido de que ciertos hombres superiores están por encima de la moral común. La novela explora su tormento psicológico y eventual redención.",
+                portada: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "Orgullo y Prejuicio",
+                autor: "Jane Austen",
+                categoria: "Romance",
+                año: 1813,
+                paginas: 432,
+                editorial: "T. Egerton",
+                sinopsis: "Elizabeth Bennet y el señor Darcy se enfrentan a sus propios prejuicios y orgullo en esta ingeniosa novela sobre el matrimonio, la clase social y el amor en la Inglaterra del siglo XIX.",
+                portada: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "El Gran Gatsby",
+                autor: "F. Scott Fitzgerald",
+                categoria: "Novela Moderna",
+                año: 1925,
+                paginas: 180,
+                editorial: "Scribner",
+                sinopsis: "Nick Carraway narra la historia del misterioso Jay Gatsby y su obsesión por recuperar el amor perdido de Daisy Buchanan en el Nueva York de los años 20, una crítica al sueño americano.",
+                portada: "https://images.unsplash.com/photo-1476275466078-4cdc71f21b96?q=80&w=400&auto=format&fit=crop"
+            },
+            {
+                titulo: "Moby Dick",
+                autor: "Herman Melville",
+                categoria: "Aventura",
+                año: 1851,
+                paginas: 635,
+                editorial: "Harper & Brothers",
+                sinopsis: "El capitán Ahab obsesionado con cazar a Moby Dick, la gran ballena blanca que le arrancó la pierna. Una épica alegoría sobre la obsesión, el destino y la lucha del hombre contra la naturaleza.",
+                portada: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=400&auto=format&fit=crop"
+            }
+        ];
+
+        let prestamos = [];
+
+        // Renderizar tarjetas
+        const grid = document.getElementById('catalogoGrid');
+        libros.forEach((libro, i) => {
+            const card = document.createElement('div');
+            card.className = 'catalogo-card';
+            card.innerHTML = `
+        <img class="catalogo-card-img" src="${libro.portada}" alt="${libro.titulo}" loading="lazy">
+        <div class="catalogo-card-info">
+            <p class="catalogo-card-titulo">${libro.titulo}</p>
+            <p class="catalogo-card-autor">${libro.autor}</p>
+            <span class="catalogo-card-categoria">${libro.categoria}</span>
+        </div>
+    `;
+            card.addEventListener('click', () => abrirModal(i));
+            grid.appendChild(card);
+        });
+
+        // Modal
+        const overlay = document.getElementById('catalogoModalOverlay');
+        const modalBody = document.getElementById('catalogoModalBody');
+        const modalClose = document.getElementById('catalogoModalClose');
+
+        function abrirModal(i) {
+            const l = libros[i];
+            const yaPrestado = prestamos.some(p => p.titulo === l.titulo);
+            modalBody.innerHTML = `
+        <img class="catalogo-modal-img" src="${l.portada}" alt="${l.titulo}">
+        <div class="catalogo-modal-info">
+            <span class="catalogo-modal-categoria">${l.categoria}</span>
+            <h2 class="catalogo-modal-titulo">${l.titulo}</h2>
+            <p class="catalogo-modal-autor">Autor: <span>${l.autor}</span></p>
+            <div class="catalogo-modal-divider"></div>
+            <p class="catalogo-modal-sinopsis-label">Sinopsis</p>
+            <p class="catalogo-modal-sinopsis">${l.sinopsis}</p>
+            <div class="catalogo-modal-meta">
+                <div class="catalogo-modal-meta-item">
+                    <span class="catalogo-modal-meta-label">Año</span>
+                    <span class="catalogo-modal-meta-value">${l.año}</span>
+                </div>
+                <div class="catalogo-modal-meta-item">
+                    <span class="catalogo-modal-meta-label">Páginas</span>
+                    <span class="catalogo-modal-meta-value">${l.paginas}</span>
+                </div>
+                <div class="catalogo-modal-meta-item">
+                    <span class="catalogo-modal-meta-label">Editorial</span>
+                    <span class="catalogo-modal-meta-value">${l.editorial}</span>
+                </div>
+            </div>
+            <button class="catalogo-modal-btn" id="btnPrestar" onclick="prestarLibro(${i})"
+                style="${yaPrestado ? 'background:#888;cursor:not-allowed;' : ''}">
+                ${yaPrestado ? '✓ Ya en tus préstamos' : '📖 Solicitar préstamo'}
+            </button>
+        </div>
+    `;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function prestarLibro(i) {
+            const l = libros[i];
+            if (prestamos.some(p => p.titulo === l.titulo)) return;
+
+            const hoy = new Date();
+            const devolucion = new Date();
+            devolucion.setDate(hoy.getDate() + 14);
+
+            prestamos.push({
+                ...l,
+                fechaPrestamo: hoy.toLocaleDateString('es-ES'),
+                fechaDevolucion: devolucion.toLocaleDateString('es-ES')
+            });
+
+            actualizarBadge();
+            renderPrestamos();
+
+            // Actualizar botón sin cerrar modal
+            const btn = document.getElementById('btnPrestar');
+            if (btn) {
+                btn.textContent = '✓ Ya en tus préstamos';
+                btn.style.background = '#888';
+                btn.style.cursor = 'not-allowed';
+            }
+
+            mostrarToast(`"${l.titulo}" agregado a préstamos`);
+        }
+
+        function actualizarBadge() {
+            document.querySelector('.cart-badge').textContent = prestamos.length;
+        }
+
+        function renderPrestamos() {
+            const container = document.getElementById('prestamosContainer');
+            if (!prestamos.length) {
+                container.innerHTML = '<div class="empty-state">No tienes préstamos activos</div>';
+                return;
+            }
+            container.innerHTML = prestamos.map((p, i) => `
+        <div class="prestamo-item">
+            <img src="${p.portada}" alt="${p.titulo}" class="prestamo-img">
+            <div class="prestamo-info">
+                <p class="prestamo-titulo">${p.titulo}</p>
+                <p class="prestamo-autor">${p.autor}</p>
+                <p class="prestamo-fecha">📅 Prestado: ${p.fechaPrestamo}</p>
+                <p class="prestamo-fecha devolucion">⏰ Devolver: ${p.fechaDevolucion}</p>
+            </div>
+            <button class="prestamo-remove" onclick="devolverLibro(${i})">✕</button>
+        </div>
+    `).join('');
+        }
+
+        function devolverLibro(i) {
+            prestamos.splice(i, 1);
+            actualizarBadge();
+            renderPrestamos();
+        }
+
+        function mostrarToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast-msg show';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2800);
+        }
+
+        function cerrarModal() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', cerrarModal);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) cerrarModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
+
+        // Panel de préstamos
+        document.getElementById('prestamosBtn').addEventListener('click', () => {
+            document.getElementById('prestamosDrawer').classList.add('open');
+        });
+        document.getElementById('prestamosClose').addEventListener('click', () => {
+            document.getElementById('prestamosDrawer').classList.remove('open');
+        });
+
+        // Toggle sidebar
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            document.getElementById('mainContent').classList.toggle('sidebar-collapsed');
+        });
+
+        // Buscador
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const q = this.value.toLowerCase();
+            document.querySelectorAll('.catalogo-card').forEach((card, i) => {
+                const l = libros[i];
+                const match = l.titulo.toLowerCase().includes(q) ||
+                    l.autor.toLowerCase().includes(q) ||
+                    l.categoria.toLowerCase().includes(q);
+                card.style.display = match ? '' : 'none';
+            });
+        });
+    </script>
+    <!-- DRAWER PRÉSTAMOS -->
+    <div class="cart-drawer" id="prestamosDrawer">
+        <div class="cart-header">
+            <h3>📚 Mis Préstamos</h3>
+            <span class="cart-close" id="prestamosClose">✕</span>
+        </div>
+        <div class="cart-items" id="prestamosContainer">
+            <div class="empty-state">No tienes préstamos activos</div>
+        </div>
+        <div class="cart-footer">
+            <p style="font-size:0.8rem;color:#888;text-align:center;margin-bottom:1rem;">Los préstamos tienen una
+                duración de 14 días</p>
+            <button class="cart-checkout" onclick="document.getElementById('prestamosDrawer').classList.remove('open')">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

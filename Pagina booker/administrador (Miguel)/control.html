@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BROKER | Administración</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="control.js" />
+  </head>
+  <body>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="logo" id="logoText">BROKER</div>
+        <div class="logo-underline"></div>
+        <nav class="menu">
+          <a href="#" class="menu-item active">Panel Admin</a>
+          <a href="index.html" class="menu-item">Volver al Catálogo</a>
+        </nav>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="sidebar-divider"></div>
+        <p class="copyright">&copy; 2026 Broker</p>
+        <p class="copyright-sub">Todos los derechos reservados</p>
+      </div>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <header class="navbar" id="navbar">
+        <div class="navbar-left">
+          <div class="header-titles">
+            <h1 class="navbar-title">Panel de Control</h1>
+            <span class="navbar-subtitle">Administración de la Biblioteca</span>
+          </div>
+        </div>
+        <div class="navbar-right">
+          <div class="navbar-actions">
+            <span class="admin-welcome">Bienvenido, Administrador</span>
+            <button class="icon-btn" title="Cerrar Sesión">🚪</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="books-section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Gestión de Biblioteca</h2>
+            <p class="section-subtitle">
+              Selecciona una acción para administrar los recursos y usuarios
+            </p>
+          </div>
+        </div>
+
+        <div class="books-grid">
+          <div class="card admin-card" data-modal="modal-add-delete">
+            <div
+              class="card-content"
+              style="
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                min-height: 220px;
+                cursor: pointer;
+              "
+            >
+              <span style="font-size: 3rem; margin-bottom: 1rem">➕ / ❌</span>
+              <h3>Agregar / Eliminar</h3>
+              <p
+                class="card-desc"
+                style="text-align: center; margin-top: 0.5rem"
+              >
+                Registra nuevos títulos en el catálogo o remueve libros
+                obsoletos.
+              </p>
+              <button class="card-btn">Gestionar</button>
+            </div>
+          </div>
+
+          <div class="card admin-card" data-modal="modal-edit-books">
+            <div
+              class="card-content"
+              style="
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                min-height: 220px;
+                cursor: pointer;
+              "
+            >
+              <span style="font-size: 3rem; margin-bottom: 1rem">📝</span>
+              <h3>Editar Libros</h3>
+              <p
+                class="card-desc"
+                style="text-align: center; margin-top: 0.5rem"
+              >
+                Modifica títulos, autores, categorías o portadas de libros
+                existentes.
+              </p>
+              <button class="card-btn">Modificar</button>
+            </div>
+          </div>
+
+          <div class="card admin-card" data-modal="modal-loan-requests">
+            <div
+              class="card-content"
+              style="
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                min-height: 220px;
+                cursor: pointer;
+              "
+            >
+              <span style="font-size: 3rem; margin-bottom: 1rem">📋</span>
+              <h3>Solicitudes de Préstamo</h3>
+              <p
+                class="card-desc"
+                style="text-align: center; margin-top: 0.5rem"
+              >
+                Revisa, aprueba o rechaza los préstamos pendientes de los
+                usuarios.
+              </p>
+              <button class="card-btn">Revisar Solicitudes</button>
+            </div>
+          </div>
+
+          <div class="card admin-card" data-modal="modal-users-list">
+            <div
+              class="card-content"
+              style="
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                min-height: 220px;
+                cursor: pointer;
+              "
+            >
+              <span style="font-size: 3rem; margin-bottom: 1rem">👥</span>
+              <h3>Usuarios Registrados</h3>
+              <p
+                class="card-desc"
+                style="text-align: center; margin-top: 0.5rem"
+              >
+                Ver lista de miembros, fechas de registro e historiales de
+                préstamo.
+              </p>
+              <button class="card-btn">Ver Usuarios</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-overlay" id="modal-add-delete">
+      <div class="modal-container admin-modal">
+        <span class="modal-close">&times;</span>
+        <h2 class="section-title" style="margin-bottom: 1.5rem">
+          Agregar o Eliminar Libros
+        </h2>
+        <div class="admin-modal-layout">
+          <form
+            class="contact-form"
+            onsubmit="event.preventDefault()"
+            style="margin: 0; max-width: 100%"
+          >
+            <h3>Agregar Nuevo Libro</h3>
+            <br />
+            <input type="text" placeholder="Título del Libro" required />
+            <input type="text" placeholder="Autor" required />
+            <input
+              type="text"
+              placeholder="Categoría (Ej: Literatura, Ciencia)"
+              required
+            />
+            <input type="url" placeholder="URL de la Imagen de Portada" />
+            <textarea
+              placeholder="Breve descripción o sinopsis del libro..."
+              rows="3"
+            ></textarea>
+            <button type="submit" class="card-btn" style="width: 100%">
+              Guardar Libro
+            </button>
+          </form>
+          <hr
+            style="margin: 2rem 0; border: 0; height: 1px; background: #ece5d8"
+          />
+          <h3>Eliminar Libros Existentes</h3>
+          <br />
+          <div style="max-height: 200px; overflow-y: auto">
+            <div class="prestamo-item">
+              <div class="prestamo-info">
+                <p class="prestamo-titulo">Don Quijote de la Mancha</p>
+                <p class="prestamo-autor">Miguel de Cervantes</p>
+              </div>
+              <button class="prestamo-remove">Eliminar</button>
+            </div>
+            <div class="prestamo-item">
+              <div class="prestamo-info">
+                <p class="prestamo-titulo">Cien Años de Soledad</p>
+                <p class="prestamo-autor">Gabriel García Márquez</p>
+              </div>
+              <button class="prestamo-remove">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-edit-books">
+      <div class="modal-container admin-modal">
+        <span class="modal-close">&times;</span>
+        <h2 class="section-title" style="margin-bottom: 1.5rem">
+          Editar Información de Libros
+        </h2>
+        <p style="margin-bottom: 1rem; font-style: italic">
+          Selecciona un libro para modificar sus datos:
+        </p>
+
+        <div class="prestamo-item">
+          <div class="prestamo-info">
+            <p class="prestamo-titulo">Hamlet</p>
+            <p class="prestamo-autor">William Shakespeare</p>
+          </div>
+          <button
+            class="card-btn"
+            style="padding: 0.3rem 1rem; font-size: 0.8rem"
+          >
+            Editar
+          </button>
+        </div>
+        <div class="prestamo-item">
+          <div class="prestamo-info">
+            <p class="prestamo-titulo">El Principito</p>
+            <p class="prestamo-autor">Antoine de Saint-Exupéry</p>
+          </div>
+          <button
+            class="card-btn"
+            style="padding: 0.3rem 1rem; font-size: 0.8rem"
+          >
+            Editar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-loan-requests">
+      <div class="modal-container admin-modal">
+        <span class="modal-close">&times;</span>
+        <h2 class="section-title" style="margin-bottom: 1.5rem">
+          Solicitudes de Préstamos Pendientes
+        </h2>
+
+        <div class="prestamo-item" style="flex-direction: column; gap: 0.3rem">
+          <div
+            style="display: flex; justify-content: space-between; width: 100%"
+          >
+            <p class="prestamo-titulo">El Aleph</p>
+            <span style="font-size: 0.85rem; color: #c9a96e; font-weight: bold"
+              >Usuario: Carlos Gómez</span
+            >
+          </div>
+          <p class="prestamo-autor">Jorge Luis Borges</p>
+          <p class="prestamo-fecha">Solicitado el: 07/06/2026</p>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem">
+            <button
+              class="card-btn"
+              style="background-color: #27ae60; color: white"
+            >
+              Aprobar
+            </button>
+            <button
+              class="card-btn"
+              style="background-color: #c0392b; color: white"
+            >
+              Rechazar
+            </button>
+          </div>
+        </div>
+
+        <div class="prestamo-item" style="flex-direction: column; gap: 0.3rem">
+          <div
+            style="display: flex; justify-content: space-between; width: 100%"
+          >
+            <p class="prestamo-titulo">Crónica de una Muerte Anunciada</p>
+            <span style="font-size: 0.85rem; color: #c9a96e; font-weight: bold"
+              >Usuario: Ana Martínez</span
+            >
+          </div>
+          <p class="prestamo-autor">Gabriel García Márquez</p>
+          <p class="prestamo-fecha">Solicitado el: 06/06/2026</p>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem">
+            <button
+              class="card-btn"
+              style="background-color: #27ae60; color: white"
+            >
+              Aprobar
+            </button>
+            <button
+              class="card-btn"
+              style="background-color: #c0392b; color: white"
+            >
+              Rechazar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-users-list">
+      <div class="modal-container admin-modal" style="max-width: 750px">
+        <span class="modal-close">&times;</span>
+        <h2 class="section-title" style="margin-bottom: 1.5rem">
+          Usuarios Registrados
+        </h2>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Registrado Desde</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Carlos Gómez</td>
+              <td>12/01/2026</td>
+              <td>
+                <button class="card-btn btn-history" data-user="Carlos Gómez">
+                  Ver Historial
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Ana Martínez</td>
+              <td>24/02/2026</td>
+              <td>
+                <button class="card-btn btn-history" data-user="Ana Martínez">
+                  Ver Historial
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          id="user-history-section"
+          style="
+            margin-top: 2rem;
+            display: none;
+            border-top: 2px dashed #c9a96e;
+            padding-top: 1rem;
+          "
+        >
+          <h3>
+            Historial de Préstamos:
+            <span id="history-username" style="color: #c9a96e"></span>
+          </h3>
+          <br />
+          <div class="prestamo-item">
+            <div class="prestamo-info">
+              <p class="prestamo-titulo">Rayuela</p>
+              <p class="prestamo-fecha">
+                Estado:
+                <span style="color: #27ae60; font-weight: bold">Devuelto</span>
+              </p>
+            </div>
+          </div>
+          <div class="prestamo-item">
+            <div class="prestamo-info">
+              <p class="prestamo-titulo">Ficciones</p>
+              <p class="prestamo-fecha">
+                Estado:
+                <span style="color: #e67e22; font-weight: bold"
+                  >En posesión (Pendiente de entrega)</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="control.js"></script>
+  </body>
+</html>
