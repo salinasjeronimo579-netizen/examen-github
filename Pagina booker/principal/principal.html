@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BROKER | Librería Clásica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="principal.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo" id="logoText">BROKER</div>
+            <div class="logo-underline"></div>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-page="inicio"> Catálogo</a>
+                <a href="#" class="menu-item" data-page="destacados"> Destacados</a>
+                <a href="#" class="menu-item" data-page="novedades"> Novedades</a>
+                <a href="#" class="menu-item" data-page="favoritos"> Favoritos</a>
+                <a href="#" class="menu-item" data-page="contacto"> Contacto</a>
+            </nav>
+        </div>
+        <div class="sidebar-bottom">
+            <div class="sidebar-divider"></div>
+            <p class="copyright">&copy; 2026 Broker</p>
+            <p class="copyright-sub">Todos los derechos reservados</p>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main" id="mainContent">
+        <header class="navbar" id="navbar">
+            <div class="navbar-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+                <h1 class="navbar-title">BROKER</h1>
+                <span class="navbar-subtitle">Librería Clásica</span>
+            </div>
+            <div class="navbar-right">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar libros..." autocomplete="off">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="navbar-actions">
+                    <button class="icon-btn" title="Mi cuenta" id="accountBtn">👤</button>
+                    <button class="icon-btn cart-btn" id="cartDrawerBtn">🛒<span class="cart-badge" id="cartBadge">0</span></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- CARRUSEL HERO -->
+        <section class="hero-carousel" id="heroCarousel">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide active">
+                    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000&auto=format&fit=crop');"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content"><span class="slide-badge">NOVEDAD</span><h2 class="slide-title">Explora Nuevos Mundos</h2><p class="slide-description">Descubre historias increíbles, aventuras épicas y los mejores libros seleccionados para ti por nuestros expertos.</p><a href="#" class="slide-btn">Descubrir Colección</a></div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2000&auto=format&fit=crop');"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content"><span class="slide-badge">DESTACADO</span><h2 class="slide-title">Clásicos Inmortales</h2><p class="slide-description">Obras maestras que han trascendido generaciones. Literatura de la más alta calidad al alcance de tu mano.</p><a href="#" class="slide-btn">Ver Clásicos</a></div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2000&auto=format&fit=crop');"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content"><span class="slide-badge">EXCLUSIVO</span><h2 class="slide-title">Ediciones Especiales</h2><p class="slide-description">Colecciones únicas con encuadernaciones artesanales. Piezas de colección para los amantes de la buena lectura.</p><a href="#" class="slide-btn">Explorar Ediciones</a></div>
+                </div>
+            </div>
+            <button class="carousel-btn carousel-btn-prev" id="carouselPrev">❮</button>
+            <button class="carousel-btn carousel-btn-next" id="carouselNext">❯</button>
+            <div class="carousel-indicators" id="carouselIndicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE LIBROS (CONTENEDOR DINÁMICO) -->
+        <section class="books-section" id="booksSection">
+            <div class="section-header">
+                <div><h2 class="section-title" id="sectionTitle">Libros Destacados</h2><p class="section-subtitle" id="sectionSubtitle">Selecciones cuidadosamente curadas por nuestro equipo</p></div>
+                <a href="#" class="section-link" id="viewAllLink">Ver todo →</a>
+            </div>
+            <div class="books-grid" id="booksContainer"></div>
+        </section>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-col"><h4>BROKER</h4><p>Librería clásica desde 1985. Seleccionamos los mejores títulos para lectores exigentes.</p></div>
+                <div class="footer-col"><h4>Enlaces</h4><a href="#">Catálogo</a><a href="#">Destacados</a><a href="#">Novedades</a></div>
+                <div class="footer-col"><h4>Contacto</h4><a href="#">contacto@broker.com</a><a href="#">+34 900 123 456</a><a href="#">Madrid, España</a></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Broker Librería Clásica. Todos los derechos reservados.</p></div>
+        </footer>
+    </main>
+
+    <!-- MODAL VISTA RÁPIDA -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- CARRITO LATERAL -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header"><h3>Favoritos</h3><span class="cart-close" id="cartClose">✕</span></div>
+        <div class="cart-items" id="cartItemsContainer"><div class="empty-state">Tus favoritos están vacíos</div></div>
+        <div class="cart-footer"><div class="cart-total"><span>Total:</span><span id="cartTotal">$0.00</span></div><button class="cart-checkout" id="cartCheckout">Finalizar compra</button></div>
+    </div>
+
+    <!-- TOAST NOTIFICACIONES -->
+    <div class="toast-msg" id="toastMsg"></div>
+
+    <script src="principal.js"></script>
+</body>
+</html>
