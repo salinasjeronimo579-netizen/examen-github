@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BROKER - Panel de Administrador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo" id="logoText">BROKER</div>
+            <div class="logo-underline"></div>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-page="inicio"> Catálogo Control</a>
+                <a href="#" class="menu-item" data-page="destacados"> Destacados</a>
+                <a href="#" class="menu-item" data-page="novedades"> Novedades</a>
+                <a href="#" class="menu-item" data-page="favoritos"> Favoritos</a>
+                <a href="#" class="menu-item" data-page="solicitudes"> Solicitudes Préstamo</a>
+            </nav>
+        </div>
+        <div class="sidebar-bottom">
+            <div class="sidebar-divider"></div>
+            <p class="copyright">&copy; 2026 Broker</p>
+            <p class="copyright-sub">Panel de Administración</p>
+        </div>
+    </aside>
+
+    <main class="main" id="mainContent">
+        <header class="navbar" id="navbar">
+            <div class="navbar-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+                <h1 class="navbar-title">BROKER</h1>
+                <span class="navbar-subtitle">Administración de Inventario</span>
+            </div>
+            <div class="navbar-right">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar en inventario..." autocomplete="off">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="navbar-actions">
+                    <button class="icon-btn" title="Perfil Administrador" id="accountBtn">⚙️</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero-carousel" id="heroCarousel">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide active">
+                    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000&auto=format&fit=crop');"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content"><span class="slide-badge">CONTROL</span><h2 class="slide-title">Gestión de Biblioteca</h2><p class="slide-description">Monitorea préstamos, aprueba solicitudes pendientes y mantén actualizado el estado de disponibilidad del catálogo en tiempo real.</p></div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2000&auto=format&fit=crop');"></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content"><span class="slide-badge">ESTADÍSTICAS</span><h2 class="slide-title">Clásicos Custodiados</h2><p class="slide-description">Edita y supervisa las obras maestras literarias bajo el resguardo de la plataforma.</p></div>
+                </div>
+            </div>
+            <button class="carousel-btn carousel-btn-prev" id="carouselPrev">❮</button>
+            <button class="carousel-btn carousel-btn-next" id="carouselNext">❯</button>
+            <div class="carousel-indicators" id="carouselIndicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+            </div>
+        </section>
+
+        <section class="books-section" id="booksSection">
+            <div class="section-header">
+                <div><h2 class="section-title" id="sectionTitle">Catálogo General</h2><p class="section-subtitle" id="sectionSubtitle">Verificación de estado y disponibilidad de libros</p></div>
+                <a href="#" class="section-link" id="viewAllLink">Ver todo →</a>
+            </div>
+            <div class="books-grid" id="booksContainer"></div>
+        </section>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-col"><h4>BROKER</h4><p>Librería clásica desde 1985. Sistema interno de administración y control de activos.</p></div>
+                <div class="footer-col"><h4>Accesos</h4><a href="#">Inventario</a><a href="#">Auditoría</a><a href="#">Seguridad</a></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 Broker Librería Clásica. Panel de Control Interno.</p></div>
+        </footer>
+    </main>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="toast-msg" id="toastMsg"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
